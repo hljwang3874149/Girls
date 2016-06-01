@@ -27,16 +27,7 @@ public class ACacheManager {
     private ACache mACache;
     private Context mContext;
 
-    public ACacheManager() {
-        mManager = this;
-    }
-
-
-    public static ACacheManager getManager() {
-        return mManager;
-    }
-
-    public void init(Context ctx) {
+    public ACacheManager(Context ctx) {
         mContext = ctx;
         mACache = ACache.get(ctx);
         try {
@@ -54,6 +45,14 @@ public class ACacheManager {
             e.printStackTrace();
             favoriteList = new LinkedList<>();
         }
+    }
+
+    public static ACacheManager getManager() {
+        return mManager;
+    }
+
+    public static synchronized void init(Context ctx) {
+        mManager = new ACacheManager(ctx);
     }
 
     public void saveFavoriteDomian(ImageListDomain domain) {
